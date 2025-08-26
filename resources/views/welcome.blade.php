@@ -1,10 +1,7 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Final Project Shop</title>
-</head>
-<body>
-    
-</body>
-</html>
+<x-layout>
+  <div>
+	<h1>Finally a final project</h1>
+	<p>This was way too much >:@ </p>
+    <button class="btn">Get Started</button>
+  </div>
+</x-layout>
