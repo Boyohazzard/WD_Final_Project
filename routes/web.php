@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 
@@ -13,9 +14,11 @@ Route::get('contact', function () {
     return view('contact');
 })->name("contact");
 
-Route::get('practice', function () {
-    return view("practice");
-})->name("practice");
+Route::get('register', function () {
+    return view('register');
+})->name("register");
+
+
 
 Route::get('login', function () {
     return view('login');
@@ -29,9 +32,19 @@ Route::get('products', function () {
     return view('products');
 })->name("products");
 
-Route::get('register', function () {
-    return view('register');
-})->name("register");
+
+Route::get('practice', function () {
+    return view("practice");
+})->name("practice");
+
+
+Route::get('/products', [ProductController::class, 'index']);
+
+//Route::group(function () {
+//    Route::get('/practice', [CartController::class, 'view']);
+//    Route::post('/practice', [CartController::class, 'add']);
+//    Route::delete('/practice/{product}', [CartController::class, 'remove']);
+//});
 
 //Route::post('product', function () {
 //    return view('product');

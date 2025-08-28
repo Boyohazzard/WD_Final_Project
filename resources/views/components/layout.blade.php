@@ -3,7 +3,19 @@
 <html>
   <head>
     <title>{{ $title ?? 'Final Project' }}</title>
-    <link rel="stylesheet" href="../css/mystyle.css">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeo8XK2tUCOw1sKz6t27G+7HkRrEje1Up43EIB6HuLl5E5T"
+        crossorigin="anonymous">
+    
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76A2z02tPqdjz2O2pGzF0CW3Kp1rjYp1jybP4yywIYwYJQni8jKfAdVQSZe4jB/"
+        crossorigin="anonymous">
+    </script>
+
+
   </head>
   <body>
     <nav>

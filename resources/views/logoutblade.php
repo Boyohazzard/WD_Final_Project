@@ -1,5 +1,3 @@
 <x-layout>
-mores stuff here. but different
-<a href='contact'>contact</a>
-<a href="{{ route("practice")}}">practice space</a>
+Thanks for stopping by :3
 </x-layout>
