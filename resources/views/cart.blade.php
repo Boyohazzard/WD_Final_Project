@@ -20,7 +20,6 @@
                         <form method="POST" action="{{ url('/cart/' . $product->id) }}">
                             @csrf
                             @method('DELETE')
-                            <input type="hidden" name="product_id" value="<?php echo $product['id']?>" require>
                             <button class="btn btn-danger btn-sm remove" name="remove_item">Remove from cart</button>
                         </form>
                     </div>
