@@ -3,6 +3,7 @@
 <html>
   <head>
     <title>{{ $title ?? 'Final Project' }}</title>
+    <link rel="stylesheet" href="../css/mystyle.css">
   </head>
   <body>
     <nav>
@@ -21,9 +22,6 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" href="{{ url('/') }}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url('/contact') }}">Contact</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url('/products') }}">Products</a>
@@ -62,8 +60,8 @@
 
     {{ $slot }}
     <footer>
-      <hr />
-      © 2026 future.com
+        © 2026 future tech
+        <a class="link-info" href="{{ url('/contact') }}">Contact</a>
     </footer>
   </body>
 </html>
