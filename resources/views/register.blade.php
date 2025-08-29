@@ -1,24 +1,37 @@
 <x-layout>
-<form action="{{ route('register') }}" method="POST">
-    @csrf
-    <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
-        
-        <label for="email" class="form-label">Email</label>
-        <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
 
-        <label for="confirm-email" class="form-label">confirm Email</label>
-        <input type="text" name="confirm-email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
 
-        <label for="password" class="form-label">Password</label>
-        <input type="text" name="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}">
-        @error('email or password')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
 
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
+<div class="container mt-5" style="max-width: 400px;">
+    <h2>Register</h2>
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
+
+        <div class="mb-3">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
+            @error('name') <small class="text-danger">{{ $message }}</small> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+            @error('email') <small class="text-danger">{{ $message }}</small> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" required>
+            @error('password') <small class="text-danger">{{ $message }}</small> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label>Confirm Password</label>
+            <input type="password" name="password_confirmation" class="form-control" required>
+        </div>
+
+        <button class="btn btn-success w-100">Register</button>
+    </form>
+</div>
 
 </x-layout>

@@ -15,6 +15,14 @@
                         <p class="card-text flex-grow-1">{{ $product->description }}</p>
                         <p class="card-text">
                             <small class="text-muted">Stock: {{ $product->stock }}</small>
+                             <form method="post" action="{{ url('/cart') }}">
+                             @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <div class="input-group">
+                                <input type="number" class="form-control" name="qty" value="1" min="1">
+                                <button class="btn btn-primary" type="submit">Add to Cart</button>
+                                </div>
+                            </form>
                         </p>
                     </div>
                 </div>
