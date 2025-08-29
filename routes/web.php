@@ -12,13 +12,11 @@ Route::get('/', fn () => view('welcome'))->name('home');
 // 公开静态页（导航用得到）
 Route::view('/contact', 'contact')->name('contact');
 
-// Products：列表/详情对所有人可见
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 // Cart：购物车通常放 session，允许未登录也能添加、查看；结算再登录
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+
 // 用 PATCH/DELETE 更贴近 REST（如果你表单只能 POST，也可以保持 POST 并在控制器里处理）
 Route::patch('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/{product}', [CartController::class, 'remove'])->name('cart.remove');
@@ -45,5 +43,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Products：列表/详情对所有人可见
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 require __DIR__ . '/auth.php';
