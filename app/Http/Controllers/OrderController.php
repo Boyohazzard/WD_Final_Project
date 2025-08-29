@@ -3,6 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderItem;
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -13,7 +21,7 @@ class OrderController extends Controller
         if(empty($cart)){
             return redirect('/cart')->with('error', 'Your cart is empty.');
         }
-        $userId = 1;
+        $userId = Auth::id();
         $products = Product::whereIn('id', array_keys($cart))->get();
 
         foreach ($products as $product) {
