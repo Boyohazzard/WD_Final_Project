@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@php
+    $title = 'Welcome :3';
+@endphp
+
+
 @section('content')
     <nav>
       <h2>Welcome to product site, a place for all your product needs</h2>

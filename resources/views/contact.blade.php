@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@php
+    $title = 'Contact';
+@endphp
+
+
 @section('content')
 <div class="max-w-3xl mx-auto py-8">
   <h1 class="text-2xl font-semibold mb-4">Contact</h1>
