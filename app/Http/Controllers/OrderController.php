@@ -20,8 +20,7 @@ class OrderController extends Controller
         }
 
         $userId = Auth::id();
-
-   
+      
         $products = Product::whereIn('id', array_keys($cart))->get();
         foreach ($products as $product) {
             $qty = (int) $cart[$product->id];
