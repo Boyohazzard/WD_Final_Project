@@ -1,4 +1,4 @@
-<nav class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <!-- 左侧：Logo + 菜单 -->
@@ -12,11 +12,15 @@
 
                 <!-- 顶部导航链接 -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <a href="{{ url('/') }}" class="text-gray-700 hover:text-gray-900">Home</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">Contact</a>
+                    <a href="{{ url('/') }}" class="text-gray-700 hover:text-gray-900">Home</a><a href="{{ route('contact') }}" class="text-gray-700 hover:text-gray-900">Contact</a>
+
+
                     <a href="{{ route('products.index') }}" class="text-gray-700 hover:text-gray-900">Products</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">Cart</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">Orders</a>
+
+                    @auth
+                        <a href="{{ route('cart.index') }}" class="text-gray-700 hover:text-gray-900">Cart</a>
+                        <a href="{{ route('orders.index') }}" class="text-gray-700 hover:text-gray-900">Orders</a>
+                    @endauth
                 </div>
             </div>
 
@@ -57,8 +61,11 @@
             <a href="{{ url('/') }}" class="block py-2 text-gray-700 hover:text-gray-900">Home</a>
             <a href="#" class="block py-2 text-gray-700 hover:text-gray-900">Contact</a>
             <a href="{{ route('products.index') }}" class="block py-2 text-gray-700 hover:text-gray-900">Products</a>
-            <a href="#" class="block py-2 text-gray-700 hover:text-gray-900">Cart</a>
-            <a href="#" class="block py-2 text-gray-700 hover:text-gray-900">Orders</a>
+
+            @auth
+                <a href="{{ route('cart.index') }}" class="block py-2 text-gray-700 hover:text-gray-900">Cart</a>
+                <a href="{{ route('orders.index') }}" class="block py-2 text-gray-700 hover:text-gray-900">Orders</a>
+            @endauth
         </div>
 
         <div class="pt-4 pb-1 border-t border-gray-200 px-4">
