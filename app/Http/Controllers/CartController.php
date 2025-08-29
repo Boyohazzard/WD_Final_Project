@@ -2,60 +2,89 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
 class CartController extends Controller
 {
-    public function view()
+    
+    public function index(Request $request)
     {
-        $cart = session('cart', []);
+        $cart = $request->session()->get('cart', []); // [id => qty]
 
-        $products = Product::whereIn('id', array_keys($cart))->get();
+        $items = [];
+        $subtotal_cents = 0;
 
-        $cartDetails = $products->map(function ($product) use ($cart) {
-            $quantity = $cart[$product->id];
-            return [
-                'product' => $product,
-                'quantity' => $quantity,
-                'line_total_cents' => $product->price_cents * $quantity,
-            ];
-        });
+        if (!empty($cart)) {
+            $products = Product::whereIn('id', array_keys($cart))->get();
 
-        return view('cart', [
-            'cartDetails' => $cartDetails,
-            'total_cents' => $cartDetails->sum('line_total_cents'),
+            foreach ($products as $p) {
+                $qty = max(0, (int)($cart[$p->id] ?? 0));
+                if ($qty <= 0) continue;
+
+                $line_cents = $p->price_cents * $qty;
+                $subtotal_cents += $line_cents;
+
+                $items[] = [
+                    'product' => $p,
+                    'qty'     => $qty,
+                    'line_cents' => $line_cents,
+                ];
+            }
+        }
+
+        return view('cart.index', [
+            'items' => $items,
+            'subtotal_cents' => $subtotal_cents,
         ]);
     }
 
     public function add(Request $request)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1',
+        $data = $request->validate([
+            'product_id' => ['required','integer','exists:products,id'],
+            'qty'        => ['nullable','integer','min:1'],
         ]);
 
-        $productId = $request->input('product_id');
-        $quantity = $request->input('quantity', 1);
+        $qty = $data['qty'] ?? 1;
 
-        $cart = session()->get('cart', []);
+        $cart = $request->session()->get('cart', []);
+        $cart[$data['product_id']] = ($cart[$data['product_id']] ?? 0) + $qty;
+        $request->session()->put('cart', $cart);
 
-        $cart[$productId] = ($cart[$productId] ?? 0) + $quantity;
-
-        session(['cart' => $cart]);
-
-        return redirect('/cart')->with('success', 'Product added to cart.');
+        return back()->with('success', 'Added to cart.');
     }
 
-    public function remove($productId)
+    public function update(Request $request, Product $product)
     {
-        $cart = session()->get('cart', []);
+        $data = $request->validate([
+            'qty' => ['required','integer','min:0'],
+        ]);
 
-        if (isset($cart[$productId])) {
-            unset($cart[$productId]);
-            session(['cart' => $cart]);
+        $cart = $request->session()->get('cart', []);
+        if ($data['qty'] <= 0) {
+            unset($cart[$product->id]);
+        } else {
+            $cart[$product->id] = $data['qty'];
         }
+        $request->session()->put('cart', $cart);
 
-        return redirect('/cart')->with('success', 'Product removed from cart.');
+        return back()->with('success', 'Cart updated.');
+    }
+
+    public function remove(Request $request, Product $product)
+    {
+        $cart = $request->session()->get('cart', []);
+        unset($cart[$product->id]);
+        $request->session()->put('cart', $cart);
+
+        return back()->with('success', 'Item removed.');
+    }
+
+    public function clear(Request $request)
+    {
+        $request->session()->forget('cart');
+        return back()->with('success', 'Cart cleared.');
     }
 }
