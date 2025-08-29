@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // GET /products?q=...&sort=price_asc|price_desc|newest
+    
     public function index(Request $request)
     {
         $q    = (string) $request->query('q', '');

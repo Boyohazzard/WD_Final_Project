@@ -8,7 +8,7 @@ class ProductRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->check(); // 登录就允许；如要更细角色之后再加 Policy
+        return auth()->check(); 
     }
 
     public function rules(): array

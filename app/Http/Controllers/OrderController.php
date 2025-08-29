@@ -3,62 +3,71 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Product;
 
 class OrderController extends Controller
 {
-    public function checkout(Request $request)
+   
+    public function store(Request $request)
     {
+       
         $cart = session('cart', []);
-
-        if(empty($cart)){
+        if (empty($cart)) {
             return redirect('/cart')->with('error', 'Your cart is empty.');
         }
-        $userId = 1;
-        $products = Product::whereIn('id', array_keys($cart))->get();
 
+        $userId = Auth::id();
+
+   
+        $products = Product::whereIn('id', array_keys($cart))->get();
         foreach ($products as $product) {
-            if ($cart[$product->id] > $product->stock) {
+            $qty = (int) $cart[$product->id];
+            if ($qty <= 0 || $qty > $product->stock) {
                 return redirect('/cart')->with('error', "Not enough stock for {$product->title}.");
             }
         }
 
+      
         $order = Order::create([
-            'user_id' => $userId,
+            'user_id'     => $userId,
             'total_cents' => 0,
-            'status' => 'pending'
+            'status'      => 'pending',
         ]);
 
+      
         $totalCents = 0;
-
         foreach ($products as $product) {
-            $quantity = $cart[$product->id];
-            $lineTotal = $product->price_cents * $quantity;
+            $qty       = (int) $cart[$product->id];
+            $lineTotal = $product->price_cents * $qty;
 
             OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $product->id,
+                'order_id'         => $order->id,
+                'product_id'       => $product->id,
                 'unit_price_cents' => $product->price_cents,
-                'quantity' => $quantity,
+                'quantity'         => $qty,
                 'line_total_cents' => $lineTotal,
             ]);
 
-            $product->decrement('stock', $quantity);
-
+            $product->decrement('stock', $qty);
             $totalCents += $lineTotal;
         }
 
+  
         $order->update(['total_cents' => $totalCents]);
-
         session()->forget('cart');
 
-        return redirect("/orders/{$order->id}")->with('success', 'Order placed successfully!');
+ 
+        return redirect()->route('orders.show', $order)
+                         ->with('success', 'Order placed successfully!');
     }
 
+ 
     public function index()
     {
-        $userId = Auth::id();
-
-        $orders = Order::where('user_id', $userId)
+        $orders = Order::where('user_id', Auth::id())
             ->with('items.product')
             ->latest()
             ->get();
@@ -66,10 +75,10 @@ class OrderController extends Controller
         return view('orders.index', compact('orders'));
     }
 
+ 
     public function show(Order $order)
     {
         $order->load('items.product');
-
         return view('orders.show', compact('order'));
     }
 }

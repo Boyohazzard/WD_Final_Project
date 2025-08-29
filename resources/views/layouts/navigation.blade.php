@@ -5,20 +5,21 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ url('/') }}">
+                    <a href="{{ route('home') }}">
                         <span class="text-xl font-bold">MyShop</span>
                     </a>
                 </div>
 
                 <!-- 顶部导航链接 -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <a href="{{ url('/') }}" class="text-gray-700 hover:text-gray-900">Home</a><a href="{{ route('contact') }}" class="text-gray-700 hover:text-gray-900">Contact</a>
-
-
+                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-gray-900">Home</a>
+                    <a href="{{ route('contact') }}" class="text-gray-700 hover:text-gray-900">Contact</a>
                     <a href="{{ route('products.index') }}" class="text-gray-700 hover:text-gray-900">Products</a>
 
+                    {{-- Cart 对所有人可见；下单再登录 --}}
+                    <a href="{{ route('cart.index') }}" class="text-gray-700 hover:text-gray-900">Cart</a>
+
                     @auth
-                        <a href="{{ route('cart.index') }}" class="text-gray-700 hover:text-gray-900">Cart</a>
                         <a href="{{ route('orders.index') }}" class="text-gray-700 hover:text-gray-900">Orders</a>
                     @endauth
                 </div>
@@ -58,12 +59,11 @@
     <!-- 小屏下拉菜单 -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1 px-4">
-            <a href="{{ url('/') }}" class="block py-2 text-gray-700 hover:text-gray-900">Home</a>
-            <a href="#" class="block py-2 text-gray-700 hover:text-gray-900">Contact</a>
+            <a href="{{ route('home') }}" class="block py-2 text-gray-700 hover:text-gray-900">Home</a>
+            <a href="{{ route('contact') }}" class="block py-2 text-gray-700 hover:text-gray-900">Contact</a>
             <a href="{{ route('products.index') }}" class="block py-2 text-gray-700 hover:text-gray-900">Products</a>
-
+            <a href="{{ route('cart.index') }}" class="block py-2 text-gray-700 hover:text-gray-900">Cart</a>
             @auth
-                <a href="{{ route('cart.index') }}" class="block py-2 text-gray-700 hover:text-gray-900">Cart</a>
                 <a href="{{ route('orders.index') }}" class="block py-2 text-gray-700 hover:text-gray-900">Orders</a>
             @endauth
         </div>
