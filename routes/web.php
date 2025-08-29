@@ -1,48 +1,31 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\OrderController;
 
-Route::get('/', function () {
+Route::get('/', fn () => view('welcome'));
 
-    return view('home');
-})->name("home");
+Route::get('/dashboard', fn () => view('dashboard'))
+    ->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('contact', function () {
-    return view('contact');
-})->name("contact");
-
-Route::get('practice', function () {
-    return view("practice");
-})->name("practice");
-
-Route::get('login', function () {
-    return view('login');
-})->name("login");
-
-Route::get('logout', function () {
-    return view('logout');
-})->name("logout");
-
-Route::get('products', function () {
-    return view('products');
-})->name("products");
-
-Route::get('register', function () {
-    return view('register');
-})->name("register");
-
-//Route::post('product', function () {
-//    return view('product');
-//})->name("product");
 
 Route::middleware('auth')->group(function () {
-    Route::get('/cart', [CartController::class, 'view']);
-    Route::post('/cart', [CartController::class, 'add']);
-    Route::delete('/cart/{product}', [CartController::class, 'remove']);
+    Route::get('products/create',        [ProductController::class, 'create'])->name('products.create');
+    Route::post('products',              [ProductController::class, 'store'])->name('products.store');
+    Route::get('products/{product}/edit',[ProductController::class, 'edit'])->name('products.edit');
+    Route::put('products/{product}',     [ProductController::class, 'update'])->name('products.update');
+    Route::patch('products/{product}',   [ProductController::class, 'update']); // 可选
+    Route::delete('products/{product}',  [ProductController::class, 'destroy'])->name('products.destroy');
 
-    Route::post('/checkout', [OrderController::class, 'checkout']);
-    Route::get('/orders', [OrderController::class, 'index']);
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->can('view', 'order');
+    // Profile
+    Route::get('/profile',  [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile',[ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile',[ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+Route::get('products',               [ProductController::class, 'index'])->name('products.index');
+Route::get('products/{product}',     [ProductController::class, 'show'])->name('products.show');
+
+require __DIR__.'/auth.php';
