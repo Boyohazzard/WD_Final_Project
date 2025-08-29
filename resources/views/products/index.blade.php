@@ -18,7 +18,7 @@
 </form>
 
 @auth
-  <p><a href="{{ route('products.create') }}">+ Create Product</a></p>
+  <p><a href="{{ route('products.create') }}">+ Create a Product</a></p>
 @endauth
 
 {{-- 列表 --}}
