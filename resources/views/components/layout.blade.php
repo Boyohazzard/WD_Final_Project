@@ -5,13 +5,9 @@
     <title>{{ $title ?? 'Final Project' }}</title>
   </head>
   <body>
-    <nav>
-      <h3>Welcome to product site, a place for all your product needs</h3>
-      <hr>
-    </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
-    <a class="navbar-brand" href="{{ url('/') }}">MyShop</a>
+    <a class="navbar-brand" href="{{ url('/') }}">YourShop</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
       <span class="navbar-toggler-icon"></span>
