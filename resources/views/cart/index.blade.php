@@ -34,7 +34,7 @@
           <td class="p-2">${{ number_format($p->price_cents / 100, 2) }}</td>
           <td class="p-2">
             <form method="post" action="{{ route('cart.update', $p) }}" class="flex items-center gap-2">
-              @csrf
+              @csrf @method('PATCH')
               <input type="number" name="qty" value="{{ $qty }}" min="0" class="border rounded p-1 w-20">
               <button class="px-2 py-1 bg-gray-800 text-white rounded">Update</button>
             </form>

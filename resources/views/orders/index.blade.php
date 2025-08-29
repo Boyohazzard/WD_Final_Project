@@ -1,4 +1,6 @@
-<x-layout>
+@extends('layouts.app')
+
+@section('content')
   <h1 class="text-2xl font-bold mb-4">My Orders</h1>
 
   @if(session('success'))
@@ -22,4 +24,4 @@
   @empty
     <p>No orders yet.</p>
   @endforelse
-</x-layout>
+@endsection
