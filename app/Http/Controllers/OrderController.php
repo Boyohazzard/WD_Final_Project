@@ -20,7 +20,6 @@ class OrderController extends Controller
         }
 
         $userId = Auth::id();
-
    
         $products = Product::whereIn('id', array_keys($cart))->get();
         foreach ($products as $product) {
@@ -29,7 +28,6 @@ class OrderController extends Controller
                 return redirect('/cart')->with('error', "Not enough stock for {$product->title}.");
             }
         }
-
       
         $order = Order::create([
             'user_id'     => $userId,
@@ -63,7 +61,6 @@ class OrderController extends Controller
         return redirect()->route('orders.show', $order)
                          ->with('success', 'Order placed successfully!');
     }
-
  
     public function index()
     {
@@ -75,7 +72,6 @@ class OrderController extends Controller
         return view('orders.index', compact('orders'));
     }
 
- 
     public function show(Order $order)
     {
         $order->load('items.product');

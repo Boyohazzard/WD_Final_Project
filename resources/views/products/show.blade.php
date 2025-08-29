@@ -12,7 +12,8 @@
 <p style="margin:12px 0; white-space:pre-wrap;">
   {{ $product->description }}
 </p>
-{{-- Add to Cart --}}
+
+
 <form method="post" action="{{ route('cart.add') }}" style="margin-top:12px;">
   @csrf
   <input type="hidden" name="product_id" value="{{ $product->id }}">

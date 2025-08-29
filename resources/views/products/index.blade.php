@@ -3,7 +3,7 @@
 @section('content')
 <h1>Products</h1>
 
-{{-- 筛选/排序 --}}
+
 <form method="get" style="margin:12px 0;">
   <input type="text" name="q" value="{{ request('q') }}" placeholder="Search...">
 
@@ -21,7 +21,6 @@
   <p><a href="{{ route('products.create') }}">+ Create a Product</a></p>
 @endauth
 
-{{-- 列表 --}}
 
 <div class="container mx-auto px-4 mt-6">
     <h1 class="text-2xl font-semibold mb-6">Product List</h1>

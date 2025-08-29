@@ -10,7 +10,7 @@ class CartController extends Controller
     
     public function index(Request $request)
     {
-        $cart = $request->session()->get('cart', []); // [id => qty]
+        $cart = $request->session()->get('cart', []);
 
         $items = [];
         $subtotal_cents = 0;
