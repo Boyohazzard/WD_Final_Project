@@ -59,3 +59,127 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Project Setup (Laravel + Vite)
+This guide explains how to set up and run the project locally.
+Every team member must follow these steps after cloning or pulling the repository.
+
+1. Prerequisites
+
+Make sure you have the following installed:
+
+PHP 8.2+ (XAMPP recommended on Windows)
+
+Composer
+
+Node.js 18+ and npm
+
+⚠️ On Windows PowerShell you may need:
+Set-ExecutionPolicy -Scope Process Bypass
+
+2. First-time Setup (per machine)
+
+Clone the project
+
+git clone https://github.com/Boyohazzard/WD_Final_Project.git
+cd WD_Final_Project
+
+
+Install PHP dependencies
+
+composer install
+
+
+Install frontend dependencies
+
+npm install
+
+
+Environment file
+
+cp .env.example .env
+php artisan key:generate
+
+
+Edit .env and configure:
+
+DB_DATABASE=laravel
+
+DB_USERNAME=root
+
+DB_PASSWORD= (or your MySQL password)
+
+Adjust DB_PORT=3306 if you changed MySQL port.
+
+Database
+
+Create the database in phpMyAdmin or MySQL CLI:
+
+CREATE DATABASE laravel;
+
+
+Run migrations:
+
+php artisan migrate
+
+
+(Optional) Seed demo data:
+
+php artisan db:seed
+
+1. Running the Project (every time you develop)
+
+Open two terminals:
+
+Terminal A – Laravel server
+
+php artisan serve
+
+
+Runs on: http://127.0.0.1:8000
+
+Terminal B – Vite (frontend build)
+
+npm run dev
+
+4. After Pulling New Code (git pull)
+
+Run the following to ensure dependencies & database are updated:
+
+composer install
+npm install
+php artisan migrate
+npm run dev
+
+5. Common Issues
+
+Vite manifest not found
+
+Run:
+
+npm install
+npm run dev
+php artisan view:clear
+php artisan cache:clear
+
+
+MySQL won’t start in XAMPP
+
+Check if port 3306 is in use:
+
+netstat -ano | findstr :3306
+
+
+If corrupted, restore from xampp/mysql/backup/.
+
+Reset migrations
+
+php artisan migrate:fresh --seed
+
+6. Notes for Team Members
+
+Backend developers: Run migrations frequently, write seeders for test data.
+
+Frontend developers: Always run npm run dev to see latest changes.
+
+Everyone: Do not commit public/build/* or .env to Git (already ignored).
