@@ -30,7 +30,8 @@
         @foreach ($products as $product)
             <div class="bg-white border rounded shadow p-4 flex flex-col justify-between h-full">
                 <div>
-                    <h2 class="text-lg font-bold mb-1">{{ $product->title }}</h2>
+                    <h2 class="text-lg font-bold mb-1"><a href="{{ route('products.show', $product) }}" 
+                    class="text-blue-600 underline">{{ $product->title }}</a></h2>
                     <p class="text-gray-600 text-sm mb-2">${{ number_format($product->price_cents / 100, 2) }}</p>
                     <p class="text-gray-700 text-sm mb-3">{{ $product->description }}</p>
                     <p class="text-gray-500 text-xs mb-3">Stock: {{ $product->stock }}</p>
